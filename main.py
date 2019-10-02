@@ -52,10 +52,9 @@ def move_snake(snake, dx, dy):
   return swap
 
 while True:
-  clock.tick(500)
+  clock.tick(5)
   screen.fill(BLACK)
   snake = move_snake(snake, dx, dy)
-  print(snake)
   draw_snake(snake, WHITE)
   draw_egg(egg, YELLOW)
   pygame.display.update()
