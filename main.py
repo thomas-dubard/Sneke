@@ -26,12 +26,11 @@ def drawcell(pos, color):
   for i in range(x, x+20):
     for j in range(y, y+20):
       screen.set_at(pos, color)
-      pygame.display.update()
+  pygame.display.update()
 
 def draw_snake(snake, color):
-  for pos in snake:
-    pos[0] = pos[0] * 20
-    pos[1] = pos[1] * 20
+  for p in snake:
+    pos = p[0] * 20, p[1] * 20
     drawcell(pos, color)
 
 def draw_egg(pos, color):
