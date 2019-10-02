@@ -10,6 +10,16 @@ screen = pygame.display.set_mode((400, 400))
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+YELLOW = (125, 125, 0)
+snake = [
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 2),
+(4, 2),
+(5, 2)
+]
+egg = (10, 10)
 
 def drawcell(pos, color):
   x, y = pos
@@ -18,9 +28,17 @@ def drawcell(pos, color):
       screen.set_at(pos, color)
       pygame.display.update()
 
+def draw_snake(snake, color):
+  for pos in snake:
+    pos[0] = pos[0] * 20
+    pos[1] = pos[1] * 20
+    drawcell(pos, color)
+
+def draw_egg(pos, color):
+  drawcell(pos, color)
+
 while True:
   screen.fill(BLACK)
-  screen.set_at((10, 100), WHITE)
   pygame.display.update()
   for event in pygame.event.get(KEYDOWN):
     if event.key == K_q:
