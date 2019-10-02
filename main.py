@@ -1,4 +1,5 @@
 import sys
+import random
 import pygame
 from pygame.locals import *
 
@@ -22,6 +23,7 @@ snake = [
 egg = (10, 10)
 clock = pygame.time.Clock()
 dx, dy = 1, 0
+egg_lives = True
 
 def drawcell(pos, color):
   x, y = pos
@@ -51,22 +53,36 @@ def move_snake(snake, dx, dy):
     swap.append((x, y))
   return swap
 
+def place_egg():
+  x, y = random.randrange(0, 20), random.randrange(0, 20)
+  while (x, y) in snake:
+      x, y = random.randrange(0, 20), random.randrange(0, 20)
+  return x, y
+
 while True:
   clock.tick(5)
   screen.fill(BLACK)
   snake = move_snake(snake, dx, dy)
   draw_snake(snake, WHITE)
-  draw_egg(egg, YELLOW)
+  if egg in snake:
+    egg_lives = False
+    print("Yum")
+  elif egg_lives == True:
+    draw_egg(egg, YELLOW)
+  elif egg_lives == False:
+    egg = place_egg()
+    egg_lives = True
+    draw_egg(egg, YELLOW)
   pygame.display.update()
   for event in pygame.event.get(KEYDOWN):
     if event.key == K_e:
       # on quitte le programme lors d'un appui sur Q
       sys.exit()
-    elif event.key == K_UP:
+    elif event.key == K_UP and (dx, dy)!=(0, 1):
       dx, dy = 0, -1
-    elif event.key == K_DOWN:
+    elif event.key == K_DOWN and (dx, dy)!=(0, -1):
       dx, dy = 0, 1
-    elif event.key == K_LEFT:
+    elif event.key == K_LEFT and (dx, dy)!=(1, 0):
       dx, dy = -1, 0
-    elif event.key == K_RIGHT:
+    elif event.key == K_RIGHT and (dx, dy)!=(-1, 0):
       dx, dy = 1, 0
