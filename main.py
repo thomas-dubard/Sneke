@@ -13,8 +13,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 YELLOW = (225, 225, 0)
 snake = [
-(1, 1),
-(2, 1),
+(1, 2),
 (2, 2),
 (3, 2),
 (4, 2),
@@ -53,6 +52,16 @@ def move_snake(snake, dx, dy):
     swap.append((x, y))
   return swap
 
+def new_move_snake(snake, dx, dy):
+  x, y = snake[-1]
+  x += dx
+  y += dy
+  if x > 19 or x < 0:
+    x = x%20
+  if y > 19 or y < 0:
+    y = y%20
+  return snake[1:] + [(x, y)]
+
 def place_egg():
   x, y = random.randrange(0, 20), random.randrange(0, 20)
   while (x, y) in snake:
@@ -64,9 +73,10 @@ def growth(snake):
   return [(x-dx, y-dy)] + snake
 
 def eog(snake):
-  x, y = snake[0]
-  if (x, y) in snake[1:]:
-    print(len(snake)))
+  tetx, tety = snake[-1]
+  if (tetx, tety) in snake[:-1]:
+    print("Score=")
+    print(len(snake))
     sys.exit()
 
 t = 0
@@ -75,12 +85,10 @@ while True:
   dt = clock.tick(60)
   t += dt
 
-  eog(snake)
-
   if t>200:
     t = 0
     screen.fill(BLACK)
-    snake = move_snake(snake, dx, dy)
+    snake = new_move_snake(snake, dx, dy)
     draw_snake(snake, WHITE)
     if egg in snake:
       egg_lives = False
@@ -94,6 +102,8 @@ while True:
       draw_egg(egg, YELLOW)
     pygame.display.update()
 
+    eog(snake)
+
   for event in pygame.event.get(KEYDOWN):
     if event.key == K_e:
       # on quitte le programme lors d'un appui sur E
@@ -106,3 +116,4 @@ while True:
       dx, dy = -1, 0
     elif event.key == K_RIGHT and (dx, dy)!=(-1, 0):
       dx, dy = 1, 0
+
