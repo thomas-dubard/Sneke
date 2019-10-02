@@ -39,6 +39,8 @@ def draw_egg(pos, color):
 
 while True:
   screen.fill(BLACK)
+  draw_snake(snake, WHITE)
+  draw_egg(egg, YELLOW)
   pygame.display.update()
   for event in pygame.event.get(KEYDOWN):
     if event.key == K_q:
