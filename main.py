@@ -59,6 +59,14 @@ while True:
   draw_egg(egg, YELLOW)
   pygame.display.update()
   for event in pygame.event.get(KEYDOWN):
-    if event.key == K_q:
+    if event.key == K_e:
       # on quitte le programme lors d'un appui sur Q
       sys.exit()
+    elif event.key == K_UP:
+      dx, dy = 0, -1
+    elif event.key == K_DOWN:
+      dx, dy = 0, 1
+    elif event.key == K_LEFT:
+      dx, dy = -1, 0
+    elif event.key == K_RIGHT:
+      dx, dy = 1, 0
