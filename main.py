@@ -38,7 +38,7 @@ def draw_egg(p, color):
     pos = p[0] * 20, p[1] * 20
     drawcell(pos, color)
 
-def move_snake():
+def move_snake(snake, dx, dy):
   swap = []
   for pos in snake:
     x, y = pos
@@ -52,9 +52,9 @@ def move_snake():
   snake = swap
 
 while True:
-  clock.tick(60)
   screen.fill(BLACK)
-  move_snake()
+  move_snake(snake, dx, dy)
+  clock.tick(60)
   draw_snake(snake, WHITE)
   draw_egg(egg, YELLOW)
   pygame.display.update()
