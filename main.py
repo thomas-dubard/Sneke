@@ -49,12 +49,13 @@ def move_snake(snake, dx, dy):
     if y > 19 or y < 0:
       y = y%20
     swap.append((x, y))
-  snake = swap
+  return swap
 
 while True:
+  clock.tick(500)
   screen.fill(BLACK)
-  move_snake(snake, dx, dy)
-  clock.tick(60)
+  snake = move_snake(snake, dx, dy)
+  print(snake)
   draw_snake(snake, WHITE)
   draw_egg(egg, YELLOW)
   pygame.display.update()
