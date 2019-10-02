@@ -59,24 +59,44 @@ def place_egg():
       x, y = random.randrange(0, 20), random.randrange(0, 20)
   return x, y
 
+def growth(snake):
+  x, y = snake[0]
+  return [(x-dx, y-dy)] + snake
+
+def eog(snake):
+  x, y = snake[0]
+  if (x, y) in snake[1:]:
+    print(len(snake)))
+    sys.exit()
+
+t = 0
+
 while True:
-  clock.tick(5)
-  screen.fill(BLACK)
-  snake = move_snake(snake, dx, dy)
-  draw_snake(snake, WHITE)
-  if egg in snake:
-    egg_lives = False
-    print("Yum")
-  elif egg_lives == True:
-    draw_egg(egg, YELLOW)
-  elif egg_lives == False:
-    egg = place_egg()
-    egg_lives = True
-    draw_egg(egg, YELLOW)
-  pygame.display.update()
+  dt = clock.tick(60)
+  t += dt
+
+  eog(snake)
+
+  if t>200:
+    t = 0
+    screen.fill(BLACK)
+    snake = move_snake(snake, dx, dy)
+    draw_snake(snake, WHITE)
+    if egg in snake:
+      egg_lives = False
+      print("Yum")
+    elif egg_lives == True:
+      draw_egg(egg, YELLOW)
+    elif egg_lives == False:
+      egg = place_egg()
+      snake = growth(snake)
+      egg_lives = True
+      draw_egg(egg, YELLOW)
+    pygame.display.update()
+
   for event in pygame.event.get(KEYDOWN):
     if event.key == K_e:
-      # on quitte le programme lors d'un appui sur Q
+      # on quitte le programme lors d'un appui sur E
       sys.exit()
     elif event.key == K_UP and (dx, dy)!=(0, 1):
       dx, dy = 0, -1
